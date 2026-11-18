@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="uz"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Janglar xaritasi | ATLAS MILITARIA</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css">
+<style>
+:root{--bg:#101820;--panel:#1a2932;--gold:#d6b36a;--text:#f2eee4;--muted:#b7c1c5}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,sans-serif}
+header{padding:14px;background:#0c141a;border-bottom:1px solid #665535;display:flex;justify-content:space-between;align-items:center}
+header b{font:bold 18px Georgia,serif;letter-spacing:2px;color:var(--gold)}header a{color:var(--gold);font-size:13px;text-decoration:none}
+main{max-width:1000px;margin:auto;padding:12px}
+h1{font:bold 24px Georgia,serif;color:var(--gold);margin:6px 0}
+.row{display:flex;flex-wrap:wrap;gap:7px;margin:9px 0}
+button{background:#22343e;color:var(--text);border:1px solid #8d7447;border-radius:5px;padding:9px 11px;font-size:13px}
+button.on{background:var(--gold);color:#17212a}
+#map{height:55vh;min-height:320px;border:1px solid #806b45;border-radius:8px}
+.panel{margin-top:12px;background:var(--panel);border:1px solid #5e5037;border-radius:7px;padding:14px}
+.panel h2{font:bold 19px Georgia,serif;color:var(--gold);margin:0 0 6px}
+.panel p{color:var(--muted);line-height:1.5;margin:5px 0}
+.tag{font-size:11px;color:#e58a7b}.note{font-size:11px;color:#829198;margin-top:10px}
+</style></head><body>
+<header><b>✦ ATLAS MILITARIA</b><a href="index.html">← Bosh sahifa</a></header>
+<main>
+<h1>Janglar va shaharlar xaritasi</h1>
+<div class="row" id="periods"></div>
+<div class="row"><button id="bB" class="on">🔴 Janglar</button><button id="bC" class="on">🟡 Shaharlar</button></div>
+<div id="map"></div>
+<div class="panel"><h2 id="t">Xaritadan belgini tanlang</h2><div id="d"><p>Jang yoki shahar belgisini bosing.</p></div></div>
+<p class="note">Joylashuvlar xaritada taxminiy ko‘rsatilgan. Ma’lumotlarni manbalar bilan tekshirib, to‘ldirib boring.</p>
+</main>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js"></script>
+<script>
+const P={all:'Barchasi',ancient:'Qadimgi',medieval:'O‘rta asrlar',mongol:'Mo‘g‘ullar',timurid:'Temuriylar',khanates:'Xonliklar',modern:'Zamonaviy'};
+// type: b=jang, c=shahar. approx=true bo‘lsa joy taxminiy.
+const D=[
+{t:'b',p:'ancient',n:'Yaksart jangi',y:'mil. av. 329',ll:[40.28,69.62],s:'Makedoniyalik Aleksandr — Saklar (skiflar)',r:'Aleksandr g‘alaba qozondi, Sirdaryo chegarasi mustahkamlandi.'},
+{t:'b',p:'medieval',n:'Talas jangi',y:'751',ll:[42.9,71.37],s:'Abbosiylar xalifaligi — Tan imperiyasi',r:'Abbosiylar g‘alabasi; Tan ta’siri Markaziy Osiyodan chiqdi.'},
+{t:'b',p:'medieval',n:'Qatvon jangi',y:'1141',ll:[39.9,66.9],a:1,s:'Qoraxitoylar — Saljuqiy Sulton Sanjar',r:'Qoraxitoylar g‘alabasi; Movarounnahr ularga bo‘ysundi.'},
+{t:'b',p:'mongol',n:'O‘tror qamali',y:'1219–1220',ll:[42.85,68.3],s:'Mo‘g‘ullar — Xorazmshohlar',r:'Uzoq qamaldan so‘ng shahar olindi; Xorazmshohlar davlati qulashi boshlandi.'},
+{t:'b',p:'mongol',n:'Buxoro olinishi',y:'1220',ll:[39.77,64.43],s:'Chingizxon qo‘shini — Xorazmshohlar garnizoni',r:'Shahar mo‘g‘ullar qo‘liga o‘tdi.'},
+{t:'b',p:'mongol',n:'Urganch qamali',y:'1221',ll:[42.32,59.15],s:'Mo‘g‘ullar — Xorazm',r:'Og‘ir qamaldan so‘ng shahar olindi va katta talofat ko‘rdi.'},
+{t:'b',p:'timurid',n:'Saripul jangi',y:'1501',ll:[39.6,66.8],a:1,s:'Shayboniyxon — Zahiriddin Bobur',r:'Shayboniyxon g‘alabasi; Samarqand Shayboniylar qo‘liga o‘tdi.'},
+{t:'b',p:'khanates',n:'Marv jangi',y:'1510',ll:[37.66,62.19],s:'Safaviy Shoh Ismoil I — Shayboniyxon',r:'Shayboniyxon halok bo‘ldi, Shayboniylar kuchi susaydi.'},
+{t:'b',p:'modern',n:'Toshkentning olinishi',y:'1865',ll:[41.3,69.27],s:'Rossiya imperiyasi (Chernyayev) — Qo‘qon xonligi',r:'Toshkent Rossiya imperiyasi tarkibiga o‘tdi.'},
+{t:'b',p:'modern',n:'Irjar jangi',y:'1866',ll:[40.3,69.4],a:1,s:'Rossiya imperiyasi — Buxoro amirligi',r:'Rossiya g‘alabasi; Buxoro amirligi yo‘l qo‘ydi.'},
+{t:'b',p:'modern',n:'Xivaning bo‘ysundirilishi',y:'1873',ll:[41.38,60.36],s:'Rossiya imperiyasi (Kaufman) — Xiva xonligi',r:'Xiva xonligi Rossiya himoyasiga o‘tdi.'},
+{t:'b',p:'modern',n:'Geok-Tepa jangi',y:'1881',ll:[38.17,58.11],s:'Rossiya imperiyasi (Skobelev) — Teke turkmanlari',r:'Qal’a olindi, Turkmaniston hududi bo‘ysundirildi.'},
+{t:'c',p:'all',n:'Samarqand',ll:[39.65,66.96],i:'Zarafshon vodiysidagi qadimiy shahar; Temuriylar poytaxti.'},
+{t:'c',p:'all',n:'Buxoro',ll:[39.77,64.43],i:'Buxoro vohasidagi tarixiy markaz; Buxoro amirligi poytaxti.'},
+{t:'c',p:'all',n:'Xiva',ll:[41.38,60.36],i:'Xorazm vohasida; Xiva xonligining markazi.'},
+{t:'c',p:'all',n:'Toshkent',ll:[41.3,69.27],i:'Choch vohasidagi qadimiy shahar; muhim savdo markazi.'},
+{t:'c',p:'all',n:'Termiz',ll:[37.22,67.28],i:'Amudaryo bo‘yida; Baqtriya davridan buyon muhim shahar.'},
+{t:'c',p:'all',n:'Qo‘qon',ll:[40.53,70.94],i:'Farg‘ona vodiysida; Qo‘qon xonligi markazi.'}
+];
+const map=L.map('map').setView([40,65],5);
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'© OpenStreetMap',maxZoom:12}).addTo(map);
+const layer=L.layerGroup().addTo(map);let per='all',sb=true,sc=true;
+function draw(){layer.clearLayers();D.forEach(o=>{
+ if(o.t=='b'?!sb:!sc)return;if(per!='all'&&o.p!='all'&&o.p!=per)return;if(o.t=='c'&&per!='all'&&0)return;
+ const m=L.circleMarker(o.ll,{radius:o.t=='b'?9:7,color:'#000',weight:1,fillColor:o.t=='b'?'#d9534f':'#e4bd70',fillOpacity:.95}).addTo(layer);
+ m.bindTooltip(o.n);m.on('click',()=>{t.textContent=o.n;
+  d.innerHTML=o.t=='b'?`<p><b>Yil:</b> ${o.y} · ${P[o.p]}</p><p><b>Tomonlar:</b> ${o.s}</p><p><b>Natija:</b> ${o.r}</p>${o.a?'<p class="tag">Joylashuv taxminiy</p>':''}`:`<p>${o.i}</p>`;});
+});}
+const pb=document.getElementById('periods'),t=document.getElementById('t'),d=document.getElementById('d');
+Object.keys(P).forEach(k=>{const b=document.createElement('button');b.textContent=P[k];b.onclick=()=>{per=k;[...pb.children].forEach(x=>x.classList.toggle('on',x===b));draw();};if(k=='all')b.className='on';pb.appendChild(b);});
+bB.onclick=()=>{sb=!sb;bB.classList.toggle('on',sb);draw();};bC.onclick=()=>{sc=!sc;bC.classList.toggle('on',sc);draw();};
+const h=location.hash.slice(1);if(P[h]&&h!='all'){per=h;[...pb.children].forEach((x,i)=>x.classList.toggle('on',Object.keys(P)[i]==h));}
+draw();
+</script></body></html>
