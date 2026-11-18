@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#101820">
+<title>ATLAS MILITARIA | Markaziy Osiyo harbiy tarixi</title>
+<style>
+:root{--bg:#101820;--panel:#1a2932;--gold:#d6b36a;--text:#f2eee4;--muted:#b7c1c5}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,sans-serif}
+header{padding:16px 18px;border-bottom:1px solid #665535;background:#0c141a}
+.brand{font: bold 20px Georgia,serif;letter-spacing:2px;color:var(--gold)}
+.sub{font-size:11px;letter-spacing:1.5px;color:var(--muted);margin-top:5px}
+main{max-width:1100px;margin:auto;padding:20px 14px 40px}
+h1{font: bold clamp(26px,6vw,42px) Georgia,serif;margin:10px 0;color:var(--gold)}
+p{color:var(--muted);line-height:1.55}
+.controls{display:flex;flex-wrap:wrap;gap:9px;align-items:center;margin:18px 0}
+select,button{background:#22343e;color:var(--text);border:1px solid #8d7447;border-radius:5px;padding:11px 13px;font-size:14px}
+button{cursor:pointer}
+button.active{background:var(--gold);color:#17212a}
+#scene{height:min(65vh,560px);min-height:360px;width:100%;border:1px solid #806b45;border-radius:8px;overflow:hidden;background:linear-gradient(#172b37,#0b1218);position:relative}
+#scene canvas{display:block;width:100%;height:100%}
+.hint{font-size:12px;color:#aeb9be;margin:9px 2px}
+.panel{margin-top:14px;background:var(--panel);border:1px solid #5e5037;border-radius:7px;padding:15px}
+.panel h2{font: bold 20px Georgia,serif;color:var(--gold);margin:0 0 8px}
+#detail{min-height:52px}
+.legend{display:flex;flex-wrap:wrap;gap:14px;font-size:12px;color:var(--muted);margin-top:12px}
+.dot{display:inline-block;width:9px;height:9px;border-radius:50%;background:#e4bd70;margin-right:5px}
+footer{text-align:center;color:#829198;font-size:11px;padding:22px}
+.error{color:#ffd18b}
+@media(max-width:520px){main{padding:15px 10px}#scene{min-height:330px}.controls>*{flex:1}}
+
+.hero{padding:26px 0 22px}
+.eyebrow{font-size:11px;letter-spacing:3px;color:var(--gold)}
+.hero h1{font: bold clamp(34px,8vw,64px)/1.02 Georgia,serif;color:var(--text);max-width:780px;margin:16px 0}
+.hero h1 span{color:var(--gold)}
+.hero .lead{max-width:720px;font-size:16px}
+.navlinks{display:flex;gap:16px;flex-wrap:wrap;margin-top:14px}
+.navlinks a{color:var(--gold);font-size:13px;text-decoration:none}
+.period-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px;margin:16px 0 34px}
+.period-card{padding:16px;border:1px solid #5e5037;border-radius:6px;background:#192630}
+.period-card small{color:var(--gold);letter-spacing:1px}
+.period-card h3{font: bold 18px Georgia,serif;margin:9px 0}
+.period-card p{font-size:13px;margin:0}
+.section-heading{font:bold 24px Georgia,serif;color:var(--text);margin:30px 0 12px}
+header{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+@media(max-width:520px){.hero{padding-top:18px}.navlinks{gap:12px}}
+
+</style>
+</head>
+<body>
+<header>
+  <div><div class="brand">✦ ATLAS MILITARIA</div><div class="sub">MARKAZIY OSIYO HARBIY TARIXI</div></div>
+  <nav class="navlinks"><a href="#davrlar">DAVRLAR</a><a href="#xarita">3D XARITA</a><a href="janglar.html">JANGLAR XARITASI</a></nav>
+</header>
+<main>
+  <section class="hero" id="bosh">
+    <div class="eyebrow">TARIX · XARITA · XOTIRA</div>
+    <h1>O‘tmishni <span>xaritada</span> kashf eting.</h1>
+    <p class="lead">Markaziy Osiyo harbiy tarixiga bag‘ishlangan interaktiv atlas. Davlatlar, tarixiy shaxslar, harbiy islohotlar va muhim voqealarni davrlar kesimida o‘rganing.</p>
+    <div class="navlinks">
+      <a href="#xarita">↓ XARITANI O‘RGANISH</a>
+      <a href="#davrlar">↓ TARIXIY DAVRLAR</a>
+      <a href="janglar.html">↓ JANGLAR XARITASI</a>
+    </div>
+  </section>
+
+  <section id="davrlar">
+    <h2 class="section-heading">Tarixiy davrlar</h2>
+    <div class="period-grid">
+      <a class="period-card" href="janglar.html#ancient" style="display:block;color:inherit;text-decoration:none"><small>MIL. AVV. — IV ASR</small><h3>Qadimgi davr</h3><p>Baqtriya, So‘g‘diyona, Xorazm va qadimgi davlatlar tarixi.</p></a>
+      <a class="period-card" href="janglar.html#medieval" style="display:block;color:inherit;text-decoration:none"><small>V — XII ASRLAR</small><h3>O‘rta asrlar</h3><p>Mintaqadagi siyosiy kuchlar, qo‘shinlar va harbiy an’analar.</p></a>
+      <a class="period-card" href="janglar.html#mongol" style="display:block;color:inherit;text-decoration:none"><small>XIII — XIV ASRLAR</small><h3>Mo‘g‘ullar davri</h3><p>Mo‘g‘ullar istilosi va Chig‘atoy ulusi tarixi.</p></a>
+      <a class="period-card" href="janglar.html#timurid" style="display:block;color:inherit;text-decoration:none"><small>XIV — XVI ASRLAR</small><h3>Temuriylar davri</h3><p>Amir Temur, Temuriylar davlati va harbiy boshqaruv.</p></a>
+      <a class="period-card" href="janglar.html#khanates" style="display:block;color:inherit;text-decoration:none"><small>XVI — XIX ASRLAR</small><h3>Xonliklar davri</h3><p>Buxoro, Xiva va Qo‘qon xonliklarining tarixi.</p></a>
+      <a class="period-card" href="janglar.html#modern" style="display:block;color:inherit;text-decoration:none"><small>XIX — XX ASRLAR</small><h3>Zamonaviy davrga o‘tish</h3><p>Mintaqadagi imperiyalar va siyosiy o‘zgarishlar.</p></a>
+    </div>
+  </section>
+  <section id="xarita">
+  <div style="font-size:11px;letter-spacing:3px;color:#d6b36a">RAQAMLI TARIXIY ATLAS · 02</div>
+  <h1>Markaziy Osiyo — 3D relyef</h1>
+  <p>Hududning uch o‘lchamli, sxematik relyef modeli. Shahar belgilarini tanlang, xaritani aylantiring va yaqinlashtiring.</p>
+  <div class="controls">
+    <label for="period">Tarixiy davr:</label>
+    <select id="period">
+      <option value="all">Barcha davrlar</option>
+      <option value="ancient">Qadimgi davr</option>
+      <option value="medieval">O‘rta asrlar</option>
+      <option value="timurid">Temuriylar davri</option>
+      <option value="khanates">Xonliklar davri</option>
+    </select>
+    <button id="reset">Ko‘rinishni tiklash</button>
+  </div>
+  <div id="scene" aria-label="3D Markaziy Osiyo sxematik relyef xaritasi"></div>
+  <div class="hint">Barmoq bilan sudrab aylantiring · ikki barmoq bilan yaqinlashtiring · shahar nuqtasini bosing</div>
+  <div class="legend"><span><i class="dot"></i>Tarixiy shahar belgisi</span><span>Relyef balandliklari — sxematik, haqiqiy DEM ma’lumoti emas</span></div>
+  <section class="panel">
+    <h2 id="detail-title">Xaritadan shahar tanlang</h2>
+    <div id="detail"><p>Shahar nuqtasini bosganingizda bu yerda qisqacha ma’lumot chiqadi.</p></div>
+  </section>
+  <p class="hint error" id="status">3D xarita yuklanmoqda. Internet aloqasi kerak.</p>
+</section>
+</main>
+<footer>ATLAS MILITARIA · 2-versiya · Ta’limiy-tarixiy loyiha</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+<script>
+(function(){
+ const host=document.getElementById('scene'), status=document.getElementById('status');
+ if(!window.THREE){status.textContent='3D kutubxonasi yuklanmadi. Internetni tekshiring va sahifani yangilang.';return;}
+ const scene=new THREE.Scene(); scene.background=new THREE.Color(0x14232c);
+ const camera=new THREE.PerspectiveCamera(45,host.clientWidth/host.clientHeight,.1,1000);
+ camera.position.set(0,34,47);
+ const renderer=new THREE.WebGLRenderer({antialias:true});
+ renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,2));
+ renderer.setSize(host.clientWidth,host.clientHeight); host.appendChild(renderer.domElement);
+ const controls=new THREE.OrbitControls(camera,renderer.domElement);
+ controls.enableDamping=true; controls.dampingFactor=.06; controls.minDistance=18; controls.maxDistance=90;
+ controls.maxPolarAngle=Math.PI*.48;
+ scene.add(new THREE.HemisphereLight(0xc7d8df,0x29301f,1.15));
+ const sun=new THREE.DirectionalLight(0xffe2ae,1.2);sun.position.set(-20,35,15);scene.add(sun);
+ // Sxematik balandlik maydoni: geografik DEM emas.
+ const n=100, size=42, verts=[], indices=[], colors=[];
+ function hill(x,z,cx,cz,rx,rz,h){return h*Math.exp(-(((x-cx)/rx)**2+((z-cz)/rz)**2)*1.5);}
+ for(let iz=0;iz<=n;iz++){
+   for(let ix=0;ix<=n;ix++){
+     const x=(ix/n-.5)*size, z=(iz/n-.5)*size;
+     let y=.25*Math.sin(x*.7)*Math.cos(z*.55)+.18*Math.sin((x+z)*1.1);
+     y+=hill(x,z,-11,-12,8,5,5.4)+hill(x,z,1,-13,7,4,4.2)+hill(x,z,13,-9,8,5,5.8);
+     y+=hill(x,z,14,7,8,5,3.3)+hill(x,z,-15,7,7,5,2.3);
+     verts.push(x,y,z);
+     const t=Math.max(0,Math.min(1,(y+1)/7));
+     colors.push(.15+t*.48,.25+t*.35,.20+t*.18);
+     if(ix<n&&iz<n){const a=iz*(n+1)+ix,b=a+1,c=a+n+1,d=c+1;indices.push(a,c,b,b,c,d);}
+   }
+ }
+ const geo=new THREE.BufferGeometry();
+ geo.setAttribute('position',new THREE.Float32BufferAttribute(verts,3));
+ geo.setAttribute('color',new THREE.Float32BufferAttribute(colors,3));
+ geo.setIndex(indices);geo.computeVertexNormals();
+ const terrain=new THREE.Mesh(geo,new THREE.MeshStandardMaterial({vertexColors:true,roughness:1,metalness:0,side:THREE.DoubleSide}));
+ scene.add(terrain);
+ const grid=new THREE.GridHelper(44,22,0x806b45,0x34434a);grid.position.y=-.15;scene.add(grid);
+ const cities=[
+  {name:'Samarqand',x:-5,z:2,period:['medieval','timurid','khanates'],info:'Zarafshon vodiysidagi qadimiy shahar. Temuriylar davrida yirik siyosiy va madaniy markazga aylangan.'},
+  {name:'Buxoro',x:-13,z:0,period:['ancient','medieval','timurid','khanates'],info:'Buxoro vohasidagi tarixiy markaz. Turli davrlarda mintaqaning muhim siyosiy va ilmiy markazlaridan biri bo‘lgan.'},
+  {name:'Xiva',x:-20,z:-2,period:['medieval','khanates'],info:'Xorazm vohasidagi tarixiy shahar. Xiva xonligining markazi sifatida tanilgan.'},
+  {name:'Toshkent',x:3,z:-7,period:['medieval','timurid','khanates'],info:'Choch vohasidagi qadimiy shahar. Mintaqaviy savdo va siyosiy tarixda muhim o‘rin tutgan.'},
+  {name:'O‘tror',x:10,z:-17,period:['medieval'],info:'Sirdaryo bo‘yidagi tarixiy shahar. O‘rta asrlar Markaziy Osiyo tarixida muhim voqealar bilan bog‘liq.'},
+  {name:'Termiz',x:5,z:15,period:['ancient','medieval','timurid'],info:'Amudaryo bo‘yidagi qadimiy shahar. Baqtriya va keyingi tarixiy davrlar bilan bog‘liq.'},
+  {name:'Qo‘qon',x:14,z:-2,period:['khanates'],info:'Farg‘ona vodiysidagi shahar va Qo‘qon xonligining tarixiy markazi.'},
+  {name:'Balx',x:-2,z:19,period:['ancient','medieval','timurid'],info:'Tarixiy Baqtriya hududidagi qadimiy markaz. Hozirgi Afg‘oniston shimolida joylashgan.'}
+ ];
+ const markerObjects=[];
+ function labelSprite(text){
+   const c=document.createElement('canvas'),ctx=c.getContext('2d');c.width=512;c.height=96;
+   ctx.font='bold 42px Arial';ctx.fillStyle='#f5dfad';ctx.strokeStyle='#14232c';ctx.lineWidth=8;
+   ctx.strokeText(text,12,62);ctx.fillText(text,12,62);
+   const tex=new THREE.CanvasTexture(c),mat=new THREE.SpriteMaterial({map:tex,transparent:true,depthTest:false});
+   const s=new THREE.Sprite(mat);s.scale.set(5.3,1,1);return s;
+ }
+ cities.forEach((city,i)=>{
+   const g=new THREE.Group();g.userData=city;
+   const p=new THREE.Vector3(city.x,2.2,city.z);
+   const pin=new THREE.Mesh(new THREE.SphereGeometry(.48,16,16),new THREE.MeshStandardMaterial({color:0xe2bd72,emissive:0x5b3c12}));
+   pin.position.copy(p);g.add(pin);
+   const stem=new THREE.Mesh(new THREE.CylinderGeometry(.055,.055,1.5,8),new THREE.MeshStandardMaterial({color:0xe2bd72}));
+   stem.position.set(city.x,1.45,city.z);g.add(stem);
+   const label=labelSprite(city.name);label.position.set(city.x,3.35,city.z);g.add(label);
+   scene.add(g);markerObjects.push(g);
+ });
+ const raycaster=new THREE.Raycaster(), pointer=new THREE.Vector2();
+ renderer.domElement.addEventListener('pointerdown',e=>{
+   const r=renderer.domElement.getBoundingClientRect();
+   pointer.x=((e.clientX-r.left)/r.width)*2-1;pointer.y=-((e.clientY-r.top)/r.height)*2+1;
+   raycaster.setFromCamera(pointer,camera);
+   const hits=raycaster.intersectObjects(markerObjects,true);
+   if(hits.length){let o=hits[0].object;while(o.parent&&!o.userData.name)o=o.parent;
+    if(o.userData.name){document.getElementById('detail-title').textContent=o.userData.name;
+    document.getElementById('detail').innerHTML='<p>'+o.userData.info+'</p>';}}
+ });
+ document.getElementById('period').addEventListener('change',e=>{
+   const v=e.target.value;markerObjects.forEach(g=>g.visible=v==='all'||g.userData.period.includes(v));
+   document.getElementById('detail-title').textContent='Tarixiy davr: '+e.target.options[e.target.selectedIndex].text;
+   document.getElementById('detail').innerHTML='<p>Ko‘rsatilayotgan shahar belgilari tanlangan davr bilan bog‘liq umumiy tanishtiruv qatlamidir. Aniq tarixiy chegaralar keyingi bosqichda manbalar asosida kiritiladi.</p>';
+ });
+ document.getElementById('reset').addEventListener('click',()=>{camera.position.set(0,34,47);controls.target.set(0,0,0);controls.update();});
+ function resize(){const w=host.clientWidth,h=host.clientHeight;camera.aspect=w/h;camera.updateProjectionMatrix();renderer.setSize(w,h);}
+ window.addEventListener('resize',resize);
+ status.textContent='3D sxematik relyef tayyor. Xarita ustida barmoq bilan aylantiring.';
+ function animate(){requestAnimationFrame(animate);controls.update();renderer.render(scene,camera);}animate();
+})();
+</script>
+</body>
+</html>
